@@ -1,61 +1,70 @@
-import React from 'react'
-import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
+import React ,{useState}from 'react'
+import {Grid , TextField, makeStyles, Button} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
+//adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
     paper:{
-       position:'absolute',
-       top:'50%',
-       left:'50%',
        width:'400px',
        height:'450px',
-       transform:'translate(-50%,-50%)'
     },
     color:{
-       backgroundColor:'green'
+       backgroundColor:'#2ecc71'
     }
 }))
 
-export default function Login() {
-
+//react functional component Register
+export default function Register() {
+     
+    //material ui instanace
     const classes = useStyles();
+
+    //using react hooks to set the state initially to empty string
+    const [RegisterEmail,setRegisterEmail] = useState("")
+    const [RegisterPassword,setRegisterPassword] = useState("")
+
+    //called when user submits the Register form
+    const submitHandler = (e) =>{
+        e.preventDefault()
+        alert(RegisterEmail+RegisterPassword)
+    }
     return (
-       <Grid>
-           <Paper elevation={5} className={classes.paper}>
-              <Grid align="center" style={{padding:'20px 0px 0px 0px'}}>
-                 <Avatar ><LockIcon/></Avatar>
-                 <h3>Sign In</h3>
+            // Register page
+           <Paper className={classes.paper}>
+               {/* icon */}
+              <Grid align="center" style={{padding:'30px 0px 0px 0px'}}>
+                 <Avatar className={classes.color} ><PersonAddIcon/></Avatar>
+                 <h3>Register Yourself</h3>
               </Grid>
-              <Grid style={{padding:'10px 40px'}}>
-                  <TextField 
-                  label="E-mail"
-                  placeholder="Enter your Email"
-                  fullWidth required/>
-               </Grid>
-               <Grid style={{padding:'10px 40px'}}>
-                   <TextField 
-                  label="Password"
-                  placeholder="Enter the Password"
-                  type="password"
-                  fullWidth required/>
+
+              {/* Registration form  */}
+              <form onSubmit={submitHandler}>
+                <Grid style={{padding:'10px 40px'}}>
+                    <TextField 
+                    label="E-mail"
+                    placeholder="Enter your Email"
+                    fullWidth required
+                    onChange={(e)=>{setRegisterEmail(e.target.value)}}/>
                 </Grid>
-                <Grid style={{padding:'10px 0px'}}  align="center">
-                  <Button type="submit">
-                      Sign-up
-                  </Button>
+                <Grid style={{padding:'10px 40px'}}>
+                    <TextField 
+                    label="Password"
+                    placeholder="Enter the Password"
+                    type="password"
+                    fullWidth required
+                    onChange={(e)=>{setRegisterPassword(e.target.value)}}/>
                 </Grid>
-                  
-                <Grid style={{padding:'10px 0px'}}  align="center">
-                  <Typography className={classes.root}>
-                        <Link href="#" >
-                            Forgot Password?
-                        </Link>
-                  </Typography>
+                
+                {/* register button */}
+                <Grid style={{padding:'30px 40px'}}  align="center">
+                    <Button type="submit" fullWidth style={{backgroundColor:'#2ecc71',color:'white'}}>
+                        Get Started
+                    </Button>
                 </Grid>
-              
+              </form>  
            </Paper>
-       </Grid>
+       
     )
 }
