@@ -43,8 +43,8 @@ export default function Register() {
                 {/*using formik & yup Validation*/}
               <Formik 
                 initialValues={{
-                    Registration_Email    :"",
-                    Registration_Password :""
+                    email    :"",
+                    password :""
                 }}
                 validationSchema={UserSchemaRegistration}
                 onSubmit={submitHandler}
@@ -54,20 +54,20 @@ export default function Register() {
                         <Grid style={{padding:'10px 40px'}}>
                                 <Field as={TextField}
                                 label="E-mail"
-                                name="Registration_Email"
+                                name="email"
                                 placeholder="Enter your Email"
                                 fullWidth required
-                                helperText={<ErrorMessage name="Registration_Email"/>}
+                                helperText={<ErrorMessage name="email"/>}
                                 />
                         </Grid>
                         <Grid style={{padding:'10px 40px'}}>
                                 <Field as={TextField}
                                 label="Password"
-                                name="Registration_Password"
+                                name="password"
                                 placeholder="Enter the Password"
                                 type="password"
                                 fullWidth required
-                                helperText={<ErrorMessage name="Registration_Password" />}/>
+                                helperText={<ErrorMessage name="password" />}/>
                         </Grid>
                         
                         {/* register button */}

@@ -44,8 +44,8 @@ export default function Login() {
             {/*using formik & yup Validation*/}
               <Formik 
                 initialValues={{
-                    Login_Email:"",
-                    Login_Password:""
+                    email:"",
+                    password:""
                 }}
                 validationSchema={UserSchemaLogin}
                 onSubmit={submitHandler}
@@ -56,21 +56,21 @@ export default function Login() {
                         <Grid style={{padding:'10px 40px'}}>
                                 <Field as={TextField}
                                 label="E-mail"
-                                name="Login_Email"
+                                name="email"
                                 placeholder="Enter your Email"
                                 fullWidth required
-                                helperText={<ErrorMessage name="Login_Email"/>}
+                                helperText={<ErrorMessage name="email"/>}
                             />
                         </Grid>
                         {/* changing the state of LoginPassword whenever user enters a letter */}
                         <Grid style={{padding:'10px 40px'}}>
                                 <Field as={TextField} 
                                 label="Password"
-                                name="Login_Password"
+                                name="password"
                                 placeholder="Enter the Password"
                                 type="password"
                                 fullWidth required
-                                helperText={<ErrorMessage name="Login_Password"/>}
+                                helperText={<ErrorMessage name="password"/>}
                             />
                             </Grid>
 
