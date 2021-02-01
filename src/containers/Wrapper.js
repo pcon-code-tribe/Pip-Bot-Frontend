@@ -2,10 +2,10 @@ import React ,{useState}from 'react'
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Login from '../components/Login'
 import Register from '../components/Register'
+import PropTypes from 'prop-types';
  
 
 //material ui function donot touch
@@ -21,14 +21,28 @@ function TabPanel(props) {
       >
         {value === index && (
           <Box>
-            <Typography>{children}</Typography>
+            <div>{children}</div>
           </Box>
         )}
       </div>
     );
   }
+
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+  };
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
   
-export default function Index(props) {
+  
+export default function Index() {
     
   // matertial ui stuff to handel the tabs
     const [value, setValue] = useState(0);
@@ -50,8 +64,8 @@ export default function Index(props) {
                   centered
                   variant="fullWidth"
                  >
-                  <Tab label="Sign In"  /> 
-                  <Tab label="Register"  />
+                  <Tab label="Sign In"  {...a11yProps(0)}/> 
+                  <Tab label="Register"  {...a11yProps(1)}/>
               </Tabs>
           
               <TabPanel value={value} index={0}>

@@ -1,9 +1,12 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
 
+//importing validation.js
+import {UserSchemaLogin} from './Validation';
+import {Formik, Field, Form, ErrorMessage } from 'formik';
 
 //adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
@@ -17,20 +20,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 //React functional component Login
-export default function Login(props) {
+export default function Login() {
 
     //material ui instance
     const classes = useStyles();
-
-    //using react hooks to set the state initially to empty string
-    const [LoginEmail,setLoginEmail] = useState("")
-    const [LoginPassword,setLoginPassword] = useState("")
      
     //called when user submits the Login form
     const submitHandler = (e) =>{
-            e.preventDefault();
-            //attach backend
-            alert(LoginEmail+LoginPassword)
+            console.log(e)
+            
+            //attach backend  
     }
 
     return (
@@ -42,36 +41,47 @@ export default function Login(props) {
                  <Avatar className={classes.color}><LockIcon/></Avatar>
                  <h3>Sign In</h3>
               </Grid>
+            {/*using formik & yup Validation*/}
+              <Formik 
+                initialValues={{
+                    Login_Email:"",
+                    Login_Password:""
+                }}
+                validationSchema={UserSchemaLogin}
+                onSubmit={submitHandler}
+                >
+                {/* signin form  */}
+                    <Form >
+                        {/* changing the state of LoginEmail whenever user enters a letter */}
+                        <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField}
+                                label="E-mail"
+                                name="Login_Email"
+                                placeholder="Enter your Email"
+                                fullWidth required
+                                helperText={<ErrorMessage name="Login_Email"/>}
+                            />
+                        </Grid>
+                        {/* changing the state of LoginPassword whenever user enters a letter */}
+                        <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField} 
+                                label="Password"
+                                name="Login_Password"
+                                placeholder="Enter the Password"
+                                type="password"
+                                fullWidth required
+                                helperText={<ErrorMessage name="Login_Password"/>}
+                            />
+                            </Grid>
 
-             {/* signin form  */}
-             <form onSubmit={submitHandler}>
-                 {/* changing the state of LoginEmail whenever user enters a letter */}
-                <Grid style={{padding:'10px 40px'}}>
-                        <TextField 
-                        label="E-mail"
-                        placeholder="Enter your Email"
-                        fullWidth required
-                        onChange={(e) =>{setLoginEmail(e.target.value)}}
-                       />
-                </Grid>
-                {/* changing the state of LoginPassword whenever user enters a letter */}
-                <Grid style={{padding:'10px 40px'}}>
-                        <TextField 
-                        label="Password"
-                        placeholder="Enter the Password"
-                        type="password"
-                        fullWidth required
-                        onChange={(e) =>{setLoginPassword(e.target.value)}}
-                      />
-                    </Grid>
-
-                    {/* sign in button */}
-                    <Grid style={{padding:'30px 40px'}}  align="center">
-                        <Button type="submit" fullWidth style={{backgroundColor:'#2ecc71',color:'white'}}>
-                            Sign Up
-                        </Button>
-                    </Grid>
-                </form>
+                            {/* sign in button */}
+                            <Grid style={{padding:'30px 40px'}}  align="center">
+                                <Button type="submit" fullWidth style={{backgroundColor:'#2ecc71',color:'white'}}>
+                                    Sign Up
+                                </Button>
+                            </Grid>
+                        </Form>
+                 </Formik>  
                  {/* reset password implemented later */}
                 <Grid style={{padding:'00px 0px'}}  align="center">
                   <Typography className={classes.root}>
