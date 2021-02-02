@@ -1,8 +1,9 @@
 import React from 'react'
-import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
+import {Grid , TextField, makeStyles, Button, Typography, Link, responsiveFontSizes} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
+import axios from 'axios';
 
 //importing validation.js
 import {UserSchemaLogin} from './Validation';
@@ -24,12 +25,21 @@ export default function Login() {
 
     //material ui instance
     const classes = useStyles();
-     
+
+     // Create an Axios instance to 
+
     //called when user submits the Login form
     const submitHandler = (e) =>{
-            console.log(e)
-            
-            //attach backend  
+        
+        axios.post('http://localhost:3030/api/v1/auth/login', //use login endpoint
+        {email : e.email, password: e.password}) // object of loginemail & loginpassword 
+        .then(response =>{
+           alert("authentication successful")
+        })
+        .catch(err =>{
+            if(err.response.data.auth === false)
+            alert("Wrong Combination")
+        })
     }
 
     return (
@@ -41,6 +51,7 @@ export default function Login() {
                  <Avatar className={classes.color}><LockIcon/></Avatar>
                  <h3>Sign In</h3>
               </Grid>
+
             {/*using formik & yup Validation*/}
               <Formik 
                 initialValues={{
