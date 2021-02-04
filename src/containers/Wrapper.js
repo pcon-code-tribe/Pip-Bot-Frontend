@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 //material ui function donot touch
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
+  
     return (
       <div
         role="tabpanel"
@@ -42,14 +43,13 @@ function TabPanel(props) {
   }
   
   
-export default function Index() {
+export default function Index(props) {
     
   // matertial ui stuff to handel the tabs
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
       }
-
     return (
       <div>
           <Paper style={{width:'400px',margin:'40px auto'}} elevation={5}> 
@@ -70,7 +70,9 @@ export default function Index() {
           
               <TabPanel value={value} index={0}>
                 {/* login functional component called */}
-                <Login />
+                {/* passing isAuthenticated as props to login page */}
+                <Login isAuthenticated={props.isAuthenticated} />
+           
               </TabPanel>
               <TabPanel value={value} index={1}>
                 {/* register functional component called */}
