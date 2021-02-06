@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { withRouter,useLocation} from "react-router-dom";
+import Navbar from './Navbar';
  function Home() {
     //  const location = useLocation()
     //  const data = location.state.isAuth
@@ -7,8 +8,10 @@ import { withRouter,useLocation} from "react-router-dom";
      
     // console.log(location.state.isAuth)
     return (
-      
-  <div>this is homepage</div>
+      <>
+      <Navbar/>
+  <h1>This is home section</h1>
+  </>
     )
 }
  

@@ -4,6 +4,7 @@ import AlertDialog from './components/AlertDialog'
 import Home from './components/Home'
 import {BrowserRouter,Route, Switch} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import Logs from './components/Logs'
 
 export default class App extends Component {
    constructor(props)
@@ -31,7 +32,7 @@ export default class App extends Component {
 
           {/* protected route can be accessed only after login status = true */}
           <ProtectedRoute  path='/home' component={Home}  isAuth={this.state.status}/> 
-      
+          <ProtectedRoute path='/Logs' component={Logs} isAuth={this.state.status}/>
           </Switch>
         </BrowserRouter>
       </div>
