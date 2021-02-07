@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Wrapper from './containers/Wrapper'
-import AlertDialog from './components/AlertDialog'
-import Home from './components/Home'
+
+import Home from './components/home/Home'
 import {BrowserRouter,Route, Switch} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
-
+import Logout from './components/user/Logout'
+import LogFile from './components/logs/LogFile'
 export default class App extends Component {
    constructor(props)
    {
@@ -15,23 +16,27 @@ export default class App extends Component {
    }
                       //fired when users logs in correctly 
                       //sets loginstatus to true
-    isAuthenticated = () => {
+  isLogin = () => {
       this.setState({status:true})
       console.log(this.state.status)
    }
+  isLogout = ()=>{
+     this.setState({status:false})
+     console.log(this.state.status)
+  }
 
   render() {
     return (
       <div>
         <BrowserRouter>
         <Switch>
-          {/* Parent element wraps Login.js and Register.js */}
-          {/* passing isAuthenticated as props */}
-          <Route exact path='/' render={(props)=>{return(<Wrapper isAuthenticated={this.isAuthenticated}/>)}}/>
-
+          {/* Parent element wraps Login.js and Register.js
+          passing isAuthenticated as props */}
+          <Route exact path='/' render={(props)=>{return(<Wrapper isLogin={this.isLogin}/>)}}/>
           {/* protected route can be accessed only after login status = true */}
-          <ProtectedRoute  path='/home' component={Home}  isAuth={this.state.status}/> 
-      
+          <ProtectedRoute  path='/home' component={Home}  isAuth={this.state.status} /> 
+          <ProtectedRoute exact path='/logs' component={LogFile} isAuth={this.state.status}/>
+          <Route exact path='/logout' render={(props)=>{return(<Logout isLogout={this.isLogout}/>)}} /> 
           </Switch>
         </BrowserRouter>
       </div>

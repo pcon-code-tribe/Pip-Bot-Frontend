@@ -8,7 +8,7 @@ export default function ProtectedRoute( {isAuth: isAuth, component: Component,..
             (props) => {
              if(isAuth){
                  //load homepage if isAuth is true
-                return(<Component />)
+                return(<Component  />)
              }
              else{
                  //redirect to login page if isAuth is false
