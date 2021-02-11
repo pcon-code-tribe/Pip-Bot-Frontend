@@ -33,9 +33,9 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             PIPBOT
           </Typography>
-          <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/Home">Home</NavLink></Button>
-          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/Logs">Logs</NavLink></Button>
-          <Button color="inherit" onClick={event =>  window.location.href='/'}>Logout</Button>
+          <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/home">Home</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs">Logs</NavLink></Button>
+          <Button color="inherit" onClick={event =>  window.location.href='/logout'}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
