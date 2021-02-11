@@ -34,3 +34,11 @@ border-style:ridge;
     font-size: 15px;
     font-weight: bold;
   }
+  table, td, th {
+    border: 1px solid black;
+    text-align: center;
+  }
+  table {
+    width: 75%;
+    border-collapse: collapse;
+  }

@@ -3,8 +3,8 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import Login from '../components/Login'
-import Register from '../components/Register'
+import Login from '../components/user/Login'
+import Register from '../components/user/Register'
 import PropTypes from 'prop-types';
  
 
@@ -71,7 +71,7 @@ export default function Index(props) {
               <TabPanel value={value} index={0}>
                 {/* login functional component called */}
                 {/* passing isAuthenticated as props to login page */}
-                <Login isAuthenticated={props.isAuthenticated} />
+                <Login isLogin={props.isLogin} />
            
               </TabPanel>
               <TabPanel value={value} index={1}>

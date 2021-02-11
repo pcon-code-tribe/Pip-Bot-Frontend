@@ -8,7 +8,7 @@ import axios from 'axios';
 import {UserSchemaLogin} from './Validation';
 import {Formik, Field, Form, ErrorMessage } from 'formik';
 import {useHistory,Redirect} from 'react-router-dom'
-import Home from './Home';
+// import Home from './Home';
 
 //adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     
             if(response.data.auth === true)  //if login is successfull
             {   
-                {props.isAuthenticated()}     //login status is changed to true
+                {props.isLogin()}     //login status is changed to true
                 setStatus(response.data.auth)
                 localStorage.setItem('token',response.data.token)  //token saved to local machine
                 //reidrected to homepage
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
         })
     }
     
-    return (
+    return ( 
 
         // signup page
            <Paper  className={classes.paper} >

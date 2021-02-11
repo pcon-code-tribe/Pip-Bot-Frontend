@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React,{useState} from 'react'
-import { withRouter,useLocation, NavLink, useHistory} from "react-router-dom";
+import { withRouter, NavLink, useHistory} from "react-router-dom";
 import css from "./Home.css"
 import Navbar from './Navbar';
  function Home() {
@@ -9,11 +9,16 @@ import Navbar from './Navbar';
    const [webtags,setTags]=useState("");
    const [webInterval,setinterval]=useState("");
    const [userid,setUserid]=useState("");
-
    const history = useHistory();
-//  console.log(history.location.name); //it contains the token 
 
+//  console.log(history.location.name); //it contains the token 
   // const apiUrl='http://localhost:3030/add-websites';
+//   const instance = axios.create({
+//      baseURL:'http://localhost:3030/add-websites'
+//   });
+// instance.defaults.headers.common['Authorization']=history.location.name;
+
+
   // const authAxios=axios.create({
   //   baseURL:apiUrl,
   //   headers:{
@@ -30,24 +35,24 @@ import Navbar from './Navbar';
   //     return Promise.reject(error);
   //   }
   // );
-
   const submitHandler=(e)=>{
     e.preventDefault();
     setUserid(history.location.user_id);  //user_id is taken from history which was pushed from Login.js
-   axios.post("http://localhost:3030/add-websites",{} ,{headers:{"authorization":`Bearer ${history.location.name}`}},
+
+   axios.post("http://localhost:3030/add-websites",
    {
     website_name:websitename,
     tags:webtags,
     link:websitelink,
     interval:webInterval,
-    user_id:userid})
+    user_id:userid},{headers:{'Authorization':`token ${localStorage.getItem('token')}`}})
     .then((response)=>{
       console.log(response);
-      setUserid("");
-      setinterval("");
-      setlink("");
-      setname("");
-      setTags("");
+    setUserid("");
+    setinterval("");
+    setlink("");
+    setname("");
+    setTags("");
       console.log("Website added successfully");
     })
     .catch(err=>{
@@ -69,7 +74,7 @@ import Navbar from './Navbar';
             <input className="input" onChange={(x)=>{setlink(x.target.value)}} value={websitelink} type="text" placeholder="Website link*"/><br/><br/>
             <input className="input" type="text" onChange={(x)=>{setTags(x.target.value)}} value={webtags} placeholder="Tags*"/><br/><br/>
             <input className="input" onChange={(x)=>{setinterval(x.target.value)}} value={webInterval} type="number" placeholder="Interval*"/><br/><br/>
-            <button className="button" onClick={submitHandler}>Submit</button>
+            <button className="button" onClick={submitHandler}>Submit</button><span>  **Press Double submit to add data</span>
           </form>
         </div>
         </div>
