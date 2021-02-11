@@ -41,15 +41,17 @@ const useStyles = makeStyles(theme => ({
                 setStatus(response.data.auth)
                 localStorage.setItem('token',response.data.token)  //token saved to local machine
                 //reidrected to homepage
-                // console.log(response.data.id); 
+                
                 //this id will be used using adding website
                 history.push({
                     pathname:'/home',
                     state:{
                         isAuth : status
                     },
-                    user_id:response.data.id
+                    user_id:response.data.id,
+                    name:response.data.token
                 })
+                console.log(history); 
             }
             else{
                 //redirect to login page when unsuccessfull

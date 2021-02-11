@@ -11,11 +11,30 @@ import Navbar from './Navbar';
    const [userid,setUserid]=useState("");
 
    const history = useHistory();
-  //  console.log(props.user_id);
+//  console.log(history.location.name); //it contains the token 
 
-  const submitHandler=()=>{
+  // const apiUrl='http://localhost:3030/add-websites';
+  // const authAxios=axios.create({
+  //   baseURL:apiUrl,
+  //   headers:{
+  //     authorization:`Bearer ${history.location.name}`
+  //   }
+  // })
+
+  // axios.interceptors.request.use(
+  //   config=>{
+  //     config.headers.authorization=`Bearer ${history.location.name}`;
+  //     return config;
+  //   },
+  //   error=>{
+  //     return Promise.reject(error);
+  //   }
+  // );
+
+  const submitHandler=(e)=>{
+    e.preventDefault();
     setUserid(history.location.user_id);  //user_id is taken from history which was pushed from Login.js
-   axios.post("http://localhost:3030/add-websites",
+   axios.post("http://localhost:3030/add-websites",{} ,{headers:{"authorization":`Bearer ${history.location.name}`}},
    {
     website_name:websitename,
     tags:webtags,
