@@ -35,6 +35,7 @@ export default function Navbar() {
           </Typography>
           <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/home">Home</NavLink></Button>
           <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs">Logs</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/Admin">Admin</NavLink></Button>
           <Button color="inherit" onClick={event =>  window.location.href='/logout'}>Logout</Button>
         </Toolbar>
       </AppBar>

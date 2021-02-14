@@ -1,86 +1,86 @@
-import React,{useState,useEffect} from 'react'
-import { withRouter,useLocation,Link} from "react-router-dom";
-import Navbar from './Navbar'
-import axios from 'axios'
-
+import axios from 'axios';
+import React,{useState} from 'react'
+import { withRouter, NavLink, useHistory} from "react-router-dom";
+import css from "./Home.css"
+import Navbar from './Navbar';
  function Home() {
-    //  const location = useLocation()
-    //  const data = location.state.isAuth
-    //  console.log(data)
-     
-    // console.log(location.state.isAuth)
-   const [data,setData] = useState([])
+   const [websitename,setname]=useState("");
+   const [websitelink,setlink]=useState("");
+   const [webtags,setTags]=useState("");
+   const [webInterval,setinterval]=useState("");
+   const [userid,setUserid]=useState("");
+   const history = useHistory();
 
-   //return all the users in database
-        // const getAllUserHandler = ()=>{
+//  console.log(history.location.name); //it contains the token 
+  // const apiUrl='http://localhost:3030/add-websites';
+//   const instance = axios.create({
+//      baseURL:'http://localhost:3030/add-websites'
+//   });
+// instance.defaults.headers.common['Authorization']=history.location.name;
 
-        //   axios.get('http://localhost:3030/api/v1/user/')
-        //   .then((res)=>{
-        //      console.log(res.data)
-        //      setData(res.data)
-        //   })
-        //   .catch(err=>console.log(err)
-        // }
-        
-  //get user by id
-        // const findByIdHandler = () =>{
-    
-        //     axios.get('http://localhost:3030/api/v1/user/me',{
-        //       headers:{
-        //         'Authorization':`token ${localStorage.getItem('token')}`
-        //       }
-        //     })
-        //     .then((res)=>{
-        //         setData(res.data)
-        //         console.log(data)
-        //     })
-        //     .catch(err=>console.log(err))
-        // }
 
-   //delete user when token provided
-        //   const deleteHandler =(e) =>{
-      
-        //     e.preventDefault()
-        //     axios.delete('http://localhost:3030/api/v1/user/me',{
-        //       headers:{
-        //         'Authorization':`token ${localStorage.getItem('token')}`
-        //       }
-        //     })
-        //     .then((res)=>{
-              
-        //         console.log(res.data)
-        //     })
-        //     .catch(err=>console.log(err))
-        // }
-  
-  //update plan and isActive when token provided
-      //   const updateHandler =(e) =>{
-    
-      //     e.preventDefault()
-      //     axios.put('http://localhost:3030/api/v1/user/me',{plan:2,isActive:2},{
-      //       headers:{
-      //         'Authorization':`token ${localStorage.getItem('token')}`
-      //       }
-      //     })
-      //     .then((res)=>{
-      //         console.log(res.data)
-      //     })
-      //     .catch(err=>console.log(err))
-      // }
-  
+  // const authAxios=axios.create({
+  //   baseURL:apiUrl,
+  //   headers:{
+  //     authorization:`Bearer ${history.location.name}`
+  //   }
+  // })
+
+  // axios.interceptors.request.use(
+  //   config=>{
+  //     config.headers.authorization=`Bearer ${history.location.name}`;
+  //     return config;
+  //   },
+  //   error=>{
+  //     return Promise.reject(error);
+  //   }
+  // );
+  const submitHandler=(e)=>{
+    e.preventDefault();
+    setUserid(history.location.user_id);  //user_id is taken from history which was pushed from Login.js
+
+   axios.post("http://localhost:3030/add-websites",
+   {
+    website_name:websitename,
+    tags:webtags,
+    link:websitelink,
+    interval:webInterval,
+    user_id:userid},{headers:{'Authorization':`token ${localStorage.getItem('token')}`}})
+    .then((response)=>{
+      console.log(response);
+    setUserid("");
+    setinterval("");
+    setlink("");
+    setname("");
+    setTags("");
+      console.log("Website added successfully");
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }
+
     return (
-  //  {/* <form >
-  //   <button onClick={getAllUserHandler}>get all user</button>
-  //   <button onClick={getUserByIdHandler}>get UserById</button>
-  //   <button onClick={deleteHandler}>delete user</button>
-  //   <button onClick={updateHandler}>update user</button>
-  //  </form> */}
-  <div>
-    <Navbar/>
-    <div>this is homepage</div>
-    {/* logs page */}
-  </div>
+      <>
+      <Navbar/>
+      <div className="container">
+      <div className="content">
+        <div>
+          <h1>Input the website details</h1><br/>
+        </div>
+        <div>
+          <form>
+            <input className="input" onChange={(x)=>{setname(x.target.value)}} value={websitename} type="text" placeholder="Website name*"/><br/><br/>
+            <input className="input" onChange={(x)=>{setlink(x.target.value)}} value={websitelink} type="text" placeholder="Website link*"/><br/><br/>
+            <input className="input" type="text" onChange={(x)=>{setTags(x.target.value)}} value={webtags} placeholder="Tags*"/><br/><br/>
+            <input className="input" onChange={(x)=>{setinterval(x.target.value)}} value={webInterval} type="number" placeholder="Interval*"/><br/><br/>
+            <button className="button" onClick={submitHandler}>Submit</button><span>  **Press Double submit to add data</span>
+          </form>
+        </div>
+        </div>
+      </div>
+      </>
     )
- }
+}
  
 export default withRouter(Home)
