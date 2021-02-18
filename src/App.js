@@ -8,6 +8,7 @@ import LogFile from './components/home/logs/LogFile'
 import Logout  from './components/user/Logout';
 import Admin from './components/home/Admin'
 
+
 export default class App extends Component {
    constructor(props)
    {
@@ -41,6 +42,7 @@ export default class App extends Component {
           <ProtectedRoute exact path='/logs' component={LogFile} isAuth={this.state.status}/>
           <ProtectedRoute exact path='/Admin' component={Admin} isAuth={this.state.status}/>
           <Route exact path='/logout' render={(props)=>{return(<Logout isLogout={this.isLogout}/>)}} /> 
+
         </Switch>
         </BrowserRouter>
       </div>

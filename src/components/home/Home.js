@@ -1,13 +1,16 @@
+
 import axios from 'axios';
 import React,{useState} from 'react'
 import { withRouter, NavLink, useHistory} from "react-router-dom";
-import css from "./Home.css"
+import {Container, Grid,Paper,TextField, Button} from '@material-ui/core'
 import Navbar from './Navbar';
+import {Formik,Form,Field,ErrorMessage} from 'formik'
+
  function Home() {
-   const [websitename,setname]=useState("");
-   const [websitelink,setlink]=useState("");
-   const [webtags,setTags]=useState("");
-   const [webInterval,setinterval]=useState("");
+  //  const [websitename,setname]=useState("");
+  //  const [websitelink,setlink]=useState("");
+  //  const [webtags,setTags]=useState("");
+  //  const [webInterval,setinterval]=useState("");
    const [userid,setUserid]=useState("");
    const history = useHistory();
 
@@ -22,7 +25,7 @@ import Navbar from './Navbar';
   // const authAxios=axios.create({
   //   baseURL:apiUrl,
   //   headers:{
-  //     authorization:`Bearer ${history.location.name}`
+  //     authorization:`Bearer ${history.location.name}` 
   //   }
   // })
 
@@ -36,24 +39,23 @@ import Navbar from './Navbar';
   //   }
   // );
   const submitHandler=(e)=>{
-    e.preventDefault();
-    setUserid(history.location.user_id);  //user_id is taken from history which was pushed from Login.js
-
+    
    axios.post("http://localhost:3030/add-websites",
    {
-    website_name:websitename,
-    tags:webtags,
-    link:websitelink,
-    interval:webInterval,
-    user_id:userid},{headers:{'Authorization':`token ${localStorage.getItem('token')}`}})
+    website_name : e.website_name,
+    link         : e.link,
+    tags         : e.tags,
+    interval     : e.interval
+  },
+   {
+     headers : {
+       'authorization' : `token ${localStorage.getItem('token')}`
+     }
+   })
     .then((response)=>{
       console.log(response);
-    setUserid("");
-    setinterval("");
-    setlink("");
-    setname("");
-    setTags("");
       console.log("Website added successfully");
+
     })
     .catch(err=>{
       console.log(err);
@@ -63,24 +65,66 @@ import Navbar from './Navbar';
     return (
       <>
       <Navbar/>
-      <div className="container">
-      <div className="content">
-        <div>
-          <h1>Input the website details</h1><br/>
-        </div>
-        <div>
-          <form>
-            <input className="input" onChange={(x)=>{setname(x.target.value)}} value={websitename} type="text" placeholder="Website name*"/><br/><br/>
-            <input className="input" onChange={(x)=>{setlink(x.target.value)}} value={websitelink} type="text" placeholder="Website link*"/><br/><br/>
-            <input className="input" type="text" onChange={(x)=>{setTags(x.target.value)}} value={webtags} placeholder="Tags*"/><br/><br/>
-            <input className="input" onChange={(x)=>{setinterval(x.target.value)}} value={webInterval} type="number" placeholder="Interval*"/><br/><br/>
-            <button className="button" onClick={submitHandler}>Submit</button><span>  **Press Double submit to add data</span>
-          </form>
-        </div>
-        </div>
-      </div>
+      <Container style={{marginTop:'20px'}} >
+      <Paper>
+      <Grid container justify="center" alignItems="center" style={{minHeight:'70vh'}}>
+        <Grid lg={8} xs={11}>
+      <Formik 
+       initialValues={{website_name : '',tags:'', link: '', interval: ''}}
+       onSubmit={submitHandler}
+       >
+         <Form>
+            <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField}
+                                label="Website Name"
+                                name="website_name"
+                                placeholder="Enter the website name"
+                                fullWidth
+                                type="text"
+                          
+                                />
+            </Grid>
+            <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField}
+                                label="Website Link"
+                                name="link"
+                                placeholder="Enter the website link"
+                                fullWidth
+                                required
+                            
+                            />
+                        </Grid>
+            <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField}
+                                label="Tags"
+                                name="tags"
+                                placeholder="Enter the tag"
+                                required
+                                fullWidth
+                              
+                            />
+                        </Grid>
+            <Grid style={{padding:'10px 40px'}}>
+                                <Field as={TextField}
+                                label="interval"
+                                name="interval"
+                                placeholder="Enter the website link"
+                                required
+                                type="number"
+                            />
+                        </Grid>
+            <Grid style={{padding:'10px 40px'}}>
+                             <Button type="submit" style={{backgroundColor:'#2ecc71',color:'white'}}> Submit</Button>
+                        </Grid>
+         </Form>
+        </Formik>
+       </Grid>
+       </Grid>
+       </Paper>
+     </Container>
       </>
     )
 }
  
+
 export default withRouter(Home)
