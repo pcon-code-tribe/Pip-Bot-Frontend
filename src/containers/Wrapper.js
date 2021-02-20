@@ -1,4 +1,4 @@
-import React ,{useState}from 'react'
+import React ,{useState,useEffect}from 'react'
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -46,10 +46,11 @@ function TabPanel(props) {
 export default function Index(props) {
     
   // matertial ui stuff to handel the tabs
-    const [value, setValue] = useState(0);
+   const [value,setValue] = useState(0)
     const handleChange = (event, newValue) => {
         setValue(newValue);
       }
+  
     return (
       <div>
           <Paper style={{width:'400px',margin:'40px auto'}} elevation={5}> 
@@ -76,7 +77,7 @@ export default function Index(props) {
               </TabPanel>
               <TabPanel value={value} index={1}>
                 {/* register functional component called */}
-                <Register/>
+                <Register />
               </TabPanel>
            </Paper>
       </div>
