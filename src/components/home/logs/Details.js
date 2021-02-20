@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Details=()=>{
+const Details=(props)=>{
     return (
         <>
         <h1>This is details section</h1>
+       
         </>
     )
 }
