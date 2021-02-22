@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
                 history.push({
                     pathname:'/home',
                     state:{
-                        isAuth : status
+                        isAuth : response.data.auth
                     },
                 })
                 

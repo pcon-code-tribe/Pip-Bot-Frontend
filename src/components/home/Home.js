@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import React,{useState} from 'react'
-import { withRouter, NavLink, useHistory} from "react-router-dom";
+import { withRouter, NavLink, useHistory, useParams} from "react-router-dom";
 import {Container, Grid,Paper,TextField, Button} from '@material-ui/core'
 import Navbar from './Navbar';
 import {Formik,Form,Field,ErrorMessage} from 'formik'
@@ -11,9 +11,8 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
   //  const [websitelink,setlink]=useState("");
   //  const [webtags,setTags]=useState("");
   //  const [webInterval,setinterval]=useState("");
-   const [userid,setUserid]=useState("");
-   const history = useHistory();
-
+   const [userid,setUserid] = useState("");
+ 
 //  console.log(history.location.name); //it contains the token 
   // const apiUrl='http://localhost:3030/add-websites';
 //   const instance = axios.create({

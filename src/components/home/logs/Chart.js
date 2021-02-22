@@ -4,40 +4,39 @@ import axios from 'axios'
 
 export default function Chart() {
      //initialise chart data to null
+
+    const [demo,setDemo] = useState([])
     const [chartData,setChartData] = useState()
     //function to pass data to data prop of line chart from api
-    const drawChart = ()=>{
-        //empty array to store response time values from api
-        let values = []
-        //api call
-        axios.get('http://dummy.restapiexample.com/api/v1/employees')
-        .then((res)=>{
-            res.data.data.forEach(element => {
-            values.push(parseInt(element.employee_salary))
-        });
-        // setting the props data 
-        setChartData({
-           labels: values,
-           datasets:[{
-               label: 'Response Time',
-               data:values,
-               borderColor:'rgba(255, 99, 132, 1)',
-               borderWidth:4
-           }]
-        })
-        
-        })
-        .catch(err => console.log(err))
-    }
 
-    useEffect(()=>{
-      drawChart()
-    },[])
+    const drawChart = ()=>{
+        // empty array to store response time values from api
+        var incoming =  setInterval(()=>{
+            axios.get('http://localhost:3030/logs')
+            .then((res)=>{
+              setDemo(demo.concat(res.data.time))
+            //   console.log(res.data.time)
+            })
+            .catch(err => console.log(err))
+        },3000)
+    }
+  
+   useEffect(()=>{
+     drawChart()
+   },[])
 
     return (
         <div>
             <Line 
-            data={chartData}
+            data={{
+                labels: demo,
+                datasets:[{
+                    label: 'Response Time',
+                    data: demo,
+                    borderColor:'rgba(255, 99, 132, 1)',
+                    borderWidth:4
+                }]
+             }}
             width={100}
             height={500}
             options={{ 
@@ -74,13 +73,13 @@ export default function Chart() {
                  },
                  elements:{
                      point:{
-                         radius:0
+                         radius:1
                      }
                  },
                 maintainAspectRatio: false 
             }}
             />
-            
+        {/* <button onClick={stopHandler}>stop</button> */}
         </div>
     )
 }
