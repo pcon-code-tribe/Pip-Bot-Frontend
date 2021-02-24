@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+import React,{useState} from 'react'
+import { withRouter, useHistory} from "react-router-dom";
+import Navbar from './Navbar'
+import axios from 'axios'
+import Table from './logs/Tables'
+import Box from '@material-ui/core/Box'
+import { Button, Container } from '@material-ui/core';
+
+ function Admin() {
+
+  const history  = useHistory()
+
+   const [user, setUser]                = useState([])
+   const [currentUser, setCurrentUser]  = useState([])
+   const [website, setWebsite]          = useState([])
+   const [logs, setLogs]                = useState([])
+   const [counter,setCounter]           = useState(0)
+=======
 import React,{useState,useEffect} from 'react'
 import { withRouter,useLocation,Link, Redirect, useHistory} from "react-router-dom";
 import Navbar from './Navbar'
@@ -32,13 +51,20 @@ const useStyles = makeStyles({
     // console.log(location.state.isAuth)
    const [data,setData] = useState([])
 
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
 
    //return all the users in database
 
    const getAllUserHandler = ()=>{
     axios.get('http://localhost:3030/api/v1/user/')
     .then((res)=>{
+<<<<<<< HEAD
+       setCounter(1)
+       setUser(res.data)
+      //  users = res.data.map(obj => Object.values(obj));
+=======
        setData(res.data)
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
     })
     .catch(err=>console.log(err))
    }
@@ -52,14 +78,24 @@ const useStyles = makeStyles({
               }
             })
             .then((res)=>{
+<<<<<<< HEAD
+              setCounter(2)
+              let obj =  res.data
+              delete obj[0].password
+              setCurrentUser(obj)
+=======
                 setData(res.data)
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
             })
             .catch(err=>console.log(err))
         }
 
    //delete user when token provided
           const deleteHandler =(e) =>{
+<<<<<<< HEAD
+=======
       
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
             axios.delete('http://localhost:3030/api/v1/user/me',{
               headers:{
                 'Authorization':`token ${localStorage.getItem('token')}`
@@ -70,6 +106,40 @@ const useStyles = makeStyles({
             })
             .catch(err=>console.log(err))
         }
+<<<<<<< HEAD
+
+
+        const getWebsiteHandler =(e) =>{
+          axios.get('http://localhost:3030/getAllWebsites')
+          .then((res)=>{
+            // setUser(res.data)
+            // console.log(res.data)
+            setCounter(3)
+            setWebsite(res.data)
+          })
+          .catch(err=>console.log(err))
+        }
+      
+        const getLogs =(e) =>{
+          axios.get('http://localhost:3030/logs/getlogs')
+          .then((res)=>{
+            // setUser(res.data)
+            setCounter(4)
+            setLogs(res.data)
+            // setWebsite(res.data)
+          })
+          .catch(err=>console.log(err))
+        }
+
+        const clearLogsHandler =(e) =>{
+          axios.delete('http://localhost:3030/removeWebsites/',{
+            params:{
+              id:37
+            }
+          })
+          .then((res)=>{
+            // console.log(res)
+=======
   
   //update plan and isActive when token provided
         const updateHandler =(e) =>{
@@ -82,17 +152,56 @@ const useStyles = makeStyles({
           })
           .then((res)=>{
               console.log(res.data)
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
           })
           .catch(err=>console.log(err))
       }
 
+<<<<<<< HEAD
+  //update plan and isActive when token provided
+      //   const updateHandler =(e) =>{
+    
+      //     e.preventDefault()
+      //     axios.put('http://localhost:3030/api/v1/user/me',{plan:2,isActive:2},{
+      //       headers:{
+      //         'Authorization':`token ${localStorage.getItem('token')}`
+      //       }
+      //     })
+      //     .then((res)=>{
+      //         console.log(res.data)
+      //     })
+      //     .catch(err=>console.log(err))
+      // }
+ 
+=======
       
   console.log(data);
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
     return (
   <div>
     <Navbar/>
     <Container>
     <Box>
+<<<<<<< HEAD
+    <Button variant={'outlined'} onClick={getAllUserHandler}>Users</Button>
+    <Button variant={'outlined'} onClick={getUserByIdHandler}>Find Me</Button>
+    <Button variant={'outlined'} onClick={deleteHandler}>Delete Me</Button>
+    <Button variant={'outlined'} onClick={getWebsiteHandler}>Get Websites</Button>
+    <Button variant={'outlined'} onClick={getLogs}>Logs</Button>
+    <Button variant={'outlined'} onClick={clearLogsHandler}>Clear logs</Button>
+    {/* <Button variant={'outlined'} onClick={updateHandler}>update user</Button> */}
+    </Box>
+   
+
+    { 
+        counter === 1 ? <Table data={user} />
+      : counter === 2 ? <Table data={currentUser} />
+      : counter === 3 ? <Table data={website} />
+      : counter === 4 ? <Table data={logs} />
+      : null 
+    }
+
+=======
     <Button variant={'outlined'} onClick={getAllUserHandler}>get all user</Button>
     <Button variant={'outlined'} onClick={getUserByIdHandler}>get UserById</Button>
     <Button variant={'outlined'} onClick={deleteHandler}>delete user</Button>
@@ -153,9 +262,14 @@ const useStyles = makeStyles({
         </TableBody>
       </Table>
     </TableContainer>
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
     </Container>
   </div>
     )
  }
+<<<<<<< HEAD
+//  <Table data={users} userFields={userFields}/>
+=======
  
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
 export default withRouter(Admin)

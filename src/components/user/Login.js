@@ -1,5 +1,5 @@
 import React ,{ useState } from 'react'
-import {Grid , TextField, makeStyles, Button, Typography, Link, responsiveFontSizes} from '@material-ui/core'
+import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
@@ -24,8 +24,9 @@ const useStyles = makeStyles(theme => ({
 
 //React functional component Login
  function Login(props) {
-     const [status,setStatus] = useState("")
+     const [status,setStatus] = useState(false)
     //material ui instance
+    const {isLogin} = props
     const classes = useStyles();
     const history = useHistory();
 
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
          
             if(response.data.auth === true)  //if login is successfull
             {   
-                {props.isLogin()}     //login status is changed to true
+                isLogin()    //login status is changed to true
                 setStatus(response.data.auth)
                 localStorage.setItem('token',response.data.token)  //token saved to local machine
                 //reidrected to homepage

@@ -14,15 +14,19 @@ export default class App extends Component {
    {
      super(props)
      this.state={
-       status : false  //initial login status
+       status : (localStorage.getItem('token')!=null) ? true:false//initial login status
      }
    }
+<<<<<<< HEAD
+                 //fired when users logs in correctly 
+=======
 
   //check if user has already logged in
 componentWillMount(){
   (localStorage.getItem('token')!=null)? this.setState({status:true}):this.setState({status:false})
 }
                      //fired when users logs in correctly 
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
                     //sets loginstatus to true
    isLogin = () => {
         this.setState({status:true})
