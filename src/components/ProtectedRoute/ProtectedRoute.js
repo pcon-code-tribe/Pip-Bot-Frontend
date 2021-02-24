@@ -1,12 +1,12 @@
 import React from 'react'
 import {Redirect, Route} from 'react-router-dom'
 
-export default function ProtectedRoute( {isAuth: isAuth, component: Component,...rest}) {
+export default function ProtectedRoute( {isAuth: isAuthSuccess, component: Component,...rest}) {
     return (
         
         <Route {...rest} render={
-            (props) => {
-             if(isAuth){
+            () => {
+             if(isAuthSuccess){
                  //load homepage if isAuth is true
                 return(<Component  />)
              }
@@ -15,7 +15,6 @@ export default function ProtectedRoute( {isAuth: isAuth, component: Component,..
                  return(
                  <Redirect to={{
                     pathname:'/',
-                    state:{from:props.location}
                  }} />
                  )
              }

@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0.2),
   },
   title: {
     flexGrow: 1,
@@ -34,7 +32,8 @@ export default function Navbar() {
             PIPBOT
           </Typography>
           <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/home">Home</NavLink></Button>
-          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs">Logs</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs">Curl</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/Admin">Admin</NavLink></Button>
           <Button color="inherit" onClick={event =>  window.location.href='/logout'}>Logout</Button>
         </Toolbar>
       </AppBar>

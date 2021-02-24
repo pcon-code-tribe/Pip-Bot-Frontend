@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React from 'react'
 import {Grid , TextField, makeStyles, Button} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
@@ -7,7 +7,7 @@ import axios from 'axios';
 //importing validation.js
 import {UserSchemaRegistration} from './Validation';
 import {Formik, Field, Form, ErrorMessage } from 'formik';
-import AlertDialog from './AlertDialog'
+
 //adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
     paper:{
@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
 // }
 
 //react functional component Register
-export default function Register() {
-     
+export default function Register(props) {
+
     //material ui instanace
     const classes = useStyles();
     
@@ -45,7 +45,7 @@ export default function Register() {
         .catch(err => console.log(err))
         
     }
-    
+   
     return (
             // Register page
             

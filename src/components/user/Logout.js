@@ -7,16 +7,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function Logout(props) {
-    
-  const logout = () =>{
-    props.isLogout()
-  }
+    const {isLogout} = props
+
     useEffect(()=>{
         //chnages state to false and triggers the dialog box
-         logout()
         //clears the token from local storage
-        localStorage.removeItem('token')
-      },[])
+          logout()
+        }
+      ,[])// eslint-disable-line react-hooks/exhaustive-deps
+      
+
+      const logout = () =>{
+        isLogout()
+        localStorage.removeItem('token')  
+      }
  
     return (
         <Dialog

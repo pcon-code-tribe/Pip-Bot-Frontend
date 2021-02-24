@@ -6,20 +6,21 @@ import {BrowserRouter,Route, Switch} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import LogFile from './components/home/logs/LogFile'
 import Logout  from './components/user/Logout';
+import Admin from './components/home/Admin'
+
 
 export default class App extends Component {
    constructor(props)
    {
      super(props)
      this.state={
-       status : false  //initial login status
+       status : (localStorage.getItem('token')!=null) ? true:false//initial login status
      }
    }
-                      //fired when users logs in correctly 
-                      //sets loginstatus to true
+                 //fired when users logs in correctly 
+                    //sets loginstatus to true
    isLogin = () => {
         this.setState({status:true})
-        console.log(this.state.status)
      }                  
    isLogout = ()=>{
         this.setState({status:false})
@@ -38,6 +39,7 @@ export default class App extends Component {
           {/* protected route can be accessed only after login status = true */}
           <ProtectedRoute  path='/home' component={Home}  isAuth={this.state.status} /> 
           <ProtectedRoute exact path='/logs' component={LogFile} isAuth={this.state.status}/>
+          <ProtectedRoute exact path='/Admin' component={Admin} isAuth={this.state.status}/>
           <Route exact path='/logout' render={(props)=>{return(<Logout isLogout={this.isLogout}/>)}} /> 
         </Switch>
         </BrowserRouter>

@@ -1,5 +1,5 @@
 import React ,{ useState } from 'react'
-import {Grid , TextField, makeStyles, Button, Typography, Link, responsiveFontSizes} from '@material-ui/core'
+import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import {UserSchemaLogin} from './Validation';
 import {Formik, Field, Form, ErrorMessage } from 'formik';
 import {useHistory,Redirect} from 'react-router-dom'
+
+// import Home from './Home';
 
 //adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
@@ -22,8 +24,9 @@ const useStyles = makeStyles(theme => ({
 
 //React functional component Login
  function Login(props) {
-     const [status,setStatus] = useState("")
+     const [status,setStatus] = useState(false)
     //material ui instance
+    const {isLogin} = props
     const classes = useStyles();
     const history = useHistory();
 
@@ -33,32 +36,37 @@ const useStyles = makeStyles(theme => ({
         axios.post('http://localhost:3030/api/v1/auth/login', //use login endpoint
         {email : e.email, password: e.password}) // object of loginemail & loginpassword 
         .then((response) =>{
-    
+         
             if(response.data.auth === true)  //if login is successfull
             {   
-                {props.isLogin()}     //login status is changed to true
+                isLogin()    //login status is changed to true
                 setStatus(response.data.auth)
                 localStorage.setItem('token',response.data.token)  //token saved to local machine
                 //reidrected to homepage
+                
+                //this id will be used using adding website
                 history.push({
                     pathname:'/home',
                     state:{
-                        isAuth : status
-                    }
+                        isAuth : response.data.auth
+                    },
                 })
+                
             }
             else{
                 //redirect to login page when unsuccessfull
-                return(<Redirect to='/'/>)
                 alert("wrong data")
+                return(<Redirect to='/'/>)
+          
             }
         })
         .catch(err =>{
             //when wrong email or password is entered
             if(err.response.data.auth === false)
-            alert("Wrong Combination")
+             alert("wrong combination")
         })
     }
+
     
     return ( 
 
