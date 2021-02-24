@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React ,{useState} from 'react'
+=======
+import React ,{useState,useEffect}from 'react'
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';

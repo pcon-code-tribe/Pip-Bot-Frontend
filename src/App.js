@@ -17,7 +17,16 @@ export default class App extends Component {
        status : (localStorage.getItem('token')!=null) ? true:false//initial login status
      }
    }
+<<<<<<< HEAD
                  //fired when users logs in correctly 
+=======
+
+  //check if user has already logged in
+componentWillMount(){
+  (localStorage.getItem('token')!=null)? this.setState({status:true}):this.setState({status:false})
+}
+                     //fired when users logs in correctly 
+>>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
                     //sets loginstatus to true
    isLogin = () => {
         this.setState({status:true})
@@ -41,6 +50,7 @@ export default class App extends Component {
           <ProtectedRoute exact path='/logs' component={LogFile} isAuth={this.state.status}/>
           <ProtectedRoute exact path='/Admin' component={Admin} isAuth={this.state.status}/>
           <Route exact path='/logout' render={(props)=>{return(<Logout isLogout={this.isLogout}/>)}} /> 
+
         </Switch>
         </BrowserRouter>
       </div>
