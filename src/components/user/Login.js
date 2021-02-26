@@ -1,4 +1,4 @@
-import React ,{ useState } from 'react'
+import React ,{ useState, useEffect } from 'react'
 import {Grid , TextField, makeStyles, Button, Typography, Link} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,7 @@ import axios from 'axios';
 import {UserSchemaLogin} from './Validation';
 import {Formik, Field, Form, ErrorMessage } from 'formik';
 import {useHistory,Redirect} from 'react-router-dom'
-
+import Pops from '../dialog/Pops'
 // import Home from './Home';
 
 //adding custom styles with material-ui
@@ -29,21 +29,26 @@ const useStyles = makeStyles(theme => ({
     const {isLogin} = props
     const classes = useStyles();
     const history = useHistory();
-
+    const [pops,setPops] = useState(false)
+    const [test,setTest ] = useState(null)
     //called when user submits the Login form
+    useEffect(() => {
+        localStorage.removeItem('token') 
+    }, [])
     const submitHandler = (e) =>{
-       
+        // setPops(true)
         axios.post('http://localhost:3030/api/v1/auth/login', //use login endpoint
         {email : e.email, password: e.password}) // object of loginemail & loginpassword 
         .then((response) =>{
-         
+        
+            //  setTest(false)
             if(response.data.auth === true)  //if login is successfull
             {   
                 isLogin()    //login status is changed to true
                 setStatus(response.data.auth)
                 localStorage.setItem('token',response.data.token)  //token saved to local machine
                 //reidrected to homepage
-                
+            
                 //this id will be used using adding website
                 history.push({
                     pathname:'/home',
@@ -51,33 +56,48 @@ const useStyles = makeStyles(theme => ({
                         isAuth : response.data.auth
                     },
                 })
-                
             }
             else{
                 //redirect to login page when unsuccessfull
-                alert("wrong data")
                 return(<Redirect to='/'/>)
-          
             }
         })
         .catch(err =>{
+            setPops(false)
+            console.log("pops",pops)
             //when wrong email or password is entered
-            if(err.response.data.auth === false)
-             alert("wrong combination")
+            if(err.response.data.auth === false){
+                // setPops(true)
+                callPops()
+                // setPops(true) 
+                // setTest(true)
+            }
+            else{
+                if(err.response.data.message !=null)
+              {
+                // setPops(true)
+                callPops()}
+                // setPops(2)
+                //  setTest(true)
+            }                                
         })
     }
-
+  
+    const callPops = () =>{
+       setPops(true)
+      setTest(<Pops type={"error"} text={'Incorrect Password'} status={pops}/> )
+    //    <Pops type={"error"} text={'User Not Registered'}/>
+    }
     
     return ( 
 
-        // signup page
            <Paper  className={classes.paper} >
-              {/* icon */}
+       
               <Grid align="center" style={{padding:'30px 0px 0px 0px'}}>
                  <Avatar className={classes.color}><LockIcon/></Avatar>
                  <h3>Sign In</h3>
               </Grid>
-            
+              
             {/*using formik & yup Validation*/}
               <Formik 
                 initialValues={{
@@ -87,6 +107,7 @@ const useStyles = makeStyles(theme => ({
                 validationSchema={UserSchemaLogin}
                 onSubmit={submitHandler}
                 >
+                   
                 {/* signin form  */}
                     <Form >
                         {/* changing the state of LoginEmail whenever user enters a letter */}

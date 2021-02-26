@@ -4,6 +4,7 @@ import axios from 'axios'
 import LogsTable from '../logs/LogsTable'
 import { makeStyles } from '@material-ui/core'
 import { Fab } from '@material-ui/core';
+import LineBar from '../../dialog/LineBar'
 
 const useStyles = makeStyles((theme) => ({
     icon:{
@@ -15,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   }))
 
 export default function Chart() {
-<<<<<<< HEAD
     const classes = useStyles()
     const [time,setTime] = useState([])
     const [chartData,setChartData] = useState([])
@@ -29,7 +29,11 @@ export default function Chart() {
             return;
         }
         const intervalId =  setInterval(()=>{
-            axios.get('http://localhost:3030/logs')
+            axios.get('http://localhost:3030/logs',{
+                headers:{
+                    'Authorization':`token ${localStorage.getItem('token')}`
+                  }
+            })
             .then((res)=>{
              //concats the data to chart array as object
              setChartData([...chartData,{
@@ -44,35 +48,15 @@ export default function Chart() {
              setLoop(res.data.interval*1000)
              setLink(res.data.link)
             })
-            .catch(err => console.log(err))
+            .catch(err => {if(err.response.data.message.length > 0){
+                alert("No website Added")
+                clearInterval(intervalId)
+            }})
         },loop)
         
         //clears interval when demo or chartData changes to prevent infinite loop
       return ()=>{ clearInterval(intervalId)}
       }, [time,chartData,running,link,loop]);
-=======
-     //initialise chart data to null
-
-    const [demo,setDemo] = useState([])
-    const [chartData,setChartData] = useState()
-    //function to pass data to data prop of line chart from api
-
-    const drawChart = ()=>{
-        // empty array to store response time values from api
-        var incoming =  setInterval(()=>{
-            axios.get('http://localhost:3030/logs')
-            .then((res)=>{
-              setDemo(demo.concat(res.data.time))
-            //   console.log(res.data.time)
-            })
-            .catch(err => console.log(err))
-        },3000)
-    }
-  
-   useEffect(()=>{
-     drawChart()
-   },[])
->>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
 
     const stopHandler = ()=>{
        stop === 'stop'? setStop('start') : setStop('stop')
@@ -83,7 +67,6 @@ export default function Chart() {
         <div>
             <Line 
             data={{
-<<<<<<< HEAD
                 labels: chartData.map((arr)=> arr.code ),
                 datasets:[{
                     label: 'Response Time',
@@ -91,14 +74,6 @@ export default function Chart() {
                     borderColor:'#1abc9c',
                     borderWidth:2,
                     width:8
-=======
-                labels: demo,
-                datasets:[{
-                    label: 'Response Time',
-                    data: demo,
-                    borderColor:'rgba(255, 99, 132, 1)',
-                    borderWidth:4
->>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
                 }]
              }}
             width={100}
@@ -152,14 +127,10 @@ export default function Chart() {
                  },
                  elements:{
                      point:{
-<<<<<<< HEAD
                          radius:2
                      },
                      line:{
                          backgroundColor:'rgba(0,0,0,0.02)'   
-=======
-                         radius:1
->>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
                      }
                  },
                  title:{
@@ -174,18 +145,15 @@ export default function Chart() {
               
             }}
             />
-<<<<<<< HEAD
             {/* <div style={{position:'fixed', bottom:'0',  right:'0' ,height:'20px', width:'20px'}}>
                 <button onClick={stopHandler} >{stop}</button>
             </div> */}
 
             <Fab color="secondary" size="medium" onClick={stopHandler} className={classes.icon} >
              {stop}
-            </Fab>
+           </Fab>
+            {running === true ? <LineBar loop={loop}/> : null} 
             <LogsTable chartData={chartData} />
-=======
-        {/* <button onClick={stopHandler}>stop</button> */}
->>>>>>> 95d148919e733ae511d45a6dd0933e07e833d06f
         </div>
     )
 }

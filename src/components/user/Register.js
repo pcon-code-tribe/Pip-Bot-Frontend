@@ -1,7 +1,6 @@
 import React from 'react'
 import {Grid , TextField, makeStyles, Button} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
-import {useHistory, Redirect} from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import axios from 'axios';
@@ -43,7 +42,7 @@ export default function Register(props) {
         .then((response)=>{
             alert(response.data.message)
         })
-        .catch(err => console.log(err))
+        .catch(err => alert(err.response.data.message))
         
     }
    
