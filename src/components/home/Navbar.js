@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(0.2),
+    marginRight: theme.spacing(0.3),
   },
   title: {
     flexGrow: 1,
@@ -32,10 +32,10 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             PIPBOT
           </Typography>
-          <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/home">Home</NavLink></Button>
-          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs">Curl</NavLink></Button>
-          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/Admin">Admin</NavLink></Button>
-          <Button color="inherit" onClick={event =>  window.location.href='/logout'}>Logout</Button>
+          <Button color="inherit"><NavLink style={{color:"white", textDecoration:"none"}} to="/home"><i class="fas fa-home" style={{paddingRight:'5px'}}></i>Home</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/logs"><i class="fas fa-tachometer-alt" style={{paddingRight:'5px'}}></i>Curl</NavLink></Button>
+          <Button color="inherit" ><NavLink style={{color:"white", textDecoration:"none"}} to="/Admin"><i class="fas fa-user-cog" style={{paddingRight:'5px'}}></i>Admin</NavLink></Button>
+          <Button color="inherit" onClick={event =>  window.location.href='/logout'}><i class="fas fa-sign-out-alt" style={{paddingRight:'5px'}}></i>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>

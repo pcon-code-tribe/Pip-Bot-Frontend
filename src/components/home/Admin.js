@@ -79,15 +79,15 @@ const useStyles = makeStyles((theme) => ({
   };
 
    //return all the users in database
-   const getAllUserHandler = ()=>{
-    axios.get('http://localhost:3030/api/v1/user/')
-    .then((res)=>{
-      //sets counter to 1
-       setCounter(1)
-       setUser(res.data)
-    })
-    .catch(err=>console.log(err))
-   }
+  //  const getAllUserHandler = ()=>{
+  //   axios.get('http://localhost:3030/api/v1/user/')
+  //   .then((res)=>{
+  //     //sets counter to 1
+  //      setCounter(1)
+  //      setUser(res.data)
+  //   })
+  //   .catch(err=>console.log(err))
+  //  }
 
         
   //get user by id
@@ -101,6 +101,7 @@ const useStyles = makeStyles((theme) => ({
               setCounter(2)
               let obj =  res.data
               delete obj[0].password
+              obj[0].timestamp = obj[0].timestamp.replace('T'," ").slice(0,19)
               setCurrentUser(obj)
             })
             .catch(err=>console.log(err))
@@ -133,7 +134,9 @@ const useStyles = makeStyles((theme) => ({
             obj.forEach((arr)=>{
               delete arr.user_id
               delete arr.website_id
+              arr.timestamp = arr.timestamp.replace('T'," ").slice(0,19)
             })
+         
             setWebsite(obj)
           })
           .catch(err=>console.log(err))
@@ -151,7 +154,8 @@ const useStyles = makeStyles((theme) => ({
             let obj = res.data
             obj.forEach((arr)=> { 
               delete arr.user_id 
-              delete arr.log_id})
+              delete arr.log_id
+              arr.timestamp = arr.timestamp.replace('T'," ").slice(0,19)})
             setLogs(obj)
             // setWebsite(res.data)
     
@@ -202,6 +206,10 @@ const useStyles = makeStyles((theme) => ({
     const resetCounter = () =>{
       setCounter(0)
     }
+    
+    const parseDate = ()=>{
+
+    }
 
     return (
   <div>
@@ -215,8 +223,8 @@ const useStyles = makeStyles((theme) => ({
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Users" {...a11yProps(0)} onClick={getAllUserHandler} />
-        <Tab label="Me" {...a11yProps(1)} onClick={getUserByIdHandler}/>
+        {/* <Tab label="Users" {...a11yProps(0)} onClick={getAllUserHandler} /> */}
+        <Tab label="My Profile" {...a11yProps(1)} onClick={getUserByIdHandler}/>
         <Tab label="Websites" {...a11yProps(2)} onClick={getWebsiteHandler} />
         <Tab label="Logs" {...a11yProps(3)} onClick={getLogs}/>
         <Tab {...a11yProps(4)} 
@@ -225,7 +233,7 @@ const useStyles = makeStyles((theme) => ({
                   className={classes.buton, classes.space}/>
         <Tab {...a11yProps(5)} 
                    label="Delete Website"
-                  onClick={()=> setCounter(5)}
+                  onClick={()=> setCounter(6)}
                   className={classes.buton}/>
         <Tab  {...a11yProps(6)} 
                   label="Delete Account"
