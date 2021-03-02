@@ -24,13 +24,13 @@ const useStyles = makeStyles(theme => ({
 
 //React functional component Login
  function Login(props) {
-     const [status,setStatus] = useState(false)
-    //material ui instance
+
+    const [status,setStatus] = useState(false)
+    const [showPops, setShowPops] = useState(0)
     const {isLogin} = props
     const classes = useStyles();
     const history = useHistory();
-    const [pops,setPops] = useState(false)
-    const [test,setTest ] = useState(null)
+
     //called when user submits the Login form
     useEffect(() => {
         localStorage.removeItem('token') 
@@ -63,36 +63,29 @@ const useStyles = makeStyles(theme => ({
             }
         })
         .catch(err =>{
-            setPops(false)
-            console.log("pops",pops)
-            //when wrong email or password is entered
+            
             if(err.response.data.auth === false){
-                // setPops(true)
-                callPops()
-                // setPops(true) 
-                // setTest(true)
+              setShowPops(1)
             }
-            else{
-                if(err.response.data.message !=null)
-              {
-                // setPops(true)
-                callPops()}
-                // setPops(2)
-                //  setTest(true)
-            }                                
+            else if(err.response.data.message !=null){
+              setShowPops(2)
+            }                             
         })
     }
-  
-    const callPops = () =>{
-       setPops(true)
-      setTest(<Pops type={"error"} text={'Incorrect Password'} status={pops}/> )
-    //    <Pops type={"error"} text={'User Not Registered'}/>
+   
+    const resetShowPops = ()=>{ 
+        setShowPops(0) 
     }
-    
+   
     return ( 
-
+    
            <Paper  className={classes.paper} >
-       
+             
+              { 
+                showPops === 1 ? <Pops resetShowPops = {resetShowPops} type={'error'} text={'Invalid Password'}/> 
+              : showPops === 2 ? <Pops resetShowPops = {resetShowPops} type={'error'} text={'No user Found'}/> 
+              : null
+              }
               <Grid align="center" style={{padding:'30px 0px 0px 0px'}}>
                  <Avatar className={classes.color}><LockIcon/></Avatar>
                  <h3>Sign In</h3>

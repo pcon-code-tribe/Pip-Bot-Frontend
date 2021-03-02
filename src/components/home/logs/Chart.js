@@ -1,17 +1,19 @@
 import React,{useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import {Line} from 'react-chartjs-2'
 import axios from 'axios'
 import LogsTable from '../logs/LogsTable'
 import { makeStyles } from '@material-ui/core'
 import { Fab } from '@material-ui/core';
 import LineBar from '../../dialog/LineBar'
+import Dialog from '../../dialog/Dialog'
 
 const useStyles = makeStyles((theme) => ({
     icon:{
             position: 'fixed',
             bottom: theme.spacing(2),
             right: theme.spacing(2),
-            backgroundColor: '#8e44ad'
+            backgroundColor: '#30336b'
           }
   }))
 
@@ -23,6 +25,8 @@ export default function Chart() {
     const [loop,setLoop] = useState('1000')
     const [running,setRunning] = useState(true)
     const [stop,setStop] = useState('stop')
+    const [counter,setCounter] = useState(0)
+    const history = useHistory()
 
     useEffect(() => {  
         if(running === false){
@@ -49,7 +53,7 @@ export default function Chart() {
              setLink(res.data.link)
             })
             .catch(err => {if(err.response.data.message.length > 0){
-                alert("No website Added")
+                setCounter(1)
                 clearInterval(intervalId)
             }})
         },loop)
@@ -62,9 +66,16 @@ export default function Chart() {
        stop === 'stop'? setStop('start') : setStop('stop')
        setRunning(prevState => !prevState)
     }
+
+    const redirectToHome =()=>{
+        history.push('/home')
+    }
    
     return (
         <div>
+            {counter === 1 ? <Dialog text={'No website Added, Please Add one'} button={'Add Website'}
+             resetCounter={()=> setCounter(0)} function={redirectToHome} />
+             :null}
             <Line 
             data={{
                 labels: chartData.map((arr)=> arr.code ),
@@ -141,8 +152,6 @@ export default function Chart() {
                  },
                  maintainAspectRatio:true,
                  responsive:true
-                
-              
             }}
             />
             {/* <div style={{position:'fixed', bottom:'0',  right:'0' ,height:'20px', width:'20px'}}>
@@ -152,7 +161,7 @@ export default function Chart() {
             <Fab color="secondary" size="medium" onClick={stopHandler} className={classes.icon} >
              {stop}
            </Fab>
-            {running === true ? <LineBar loop={loop}/> : null} 
+            {running === true ? <LineBar /> : null} 
             <LogsTable chartData={chartData} />
         </div>
     )

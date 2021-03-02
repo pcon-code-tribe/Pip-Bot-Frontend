@@ -9,13 +9,12 @@ const useStyles = makeStyles((theme) => ({
       }
   }))
 
-export default function LinearBuffer(props) {
+export default function LinearBuffer() {
   const classes = useStyles();
   const [progress, setProgress] = React.useState(0);
   const [buffer, setBuffer] = React.useState(10);
-  const {loop} = props
-
   const progressRef = React.useRef(() => {});
+
   React.useEffect(() => {
     progressRef.current = () => {
       if (progress > 100) {
@@ -33,7 +32,7 @@ export default function LinearBuffer(props) {
   React.useEffect(() => {
     const timer = setInterval(() => {
       progressRef.current();
-    }, loop/100);
+    }, []);
 
     return () => {
       clearInterval(timer);

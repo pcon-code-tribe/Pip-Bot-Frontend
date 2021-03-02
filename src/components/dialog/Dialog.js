@@ -1,14 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function DialogPop(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const {text, button } = props
-
+  
   const handleClose = () => {
+    props.resetCounter()
     setOpen(false);
   }
 
@@ -16,10 +17,6 @@ export default function DialogPop(props) {
     props.function()
     setOpen(false);
   }
-  
-  useEffect(() => {
-   setOpen(true)
-  }, [props.function])
 
   return (
     <div>

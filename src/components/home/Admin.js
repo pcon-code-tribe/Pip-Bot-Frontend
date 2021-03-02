@@ -1,16 +1,15 @@
 import React,{useState} from 'react'
-import { withRouter, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import Navbar from './Navbar'
 import axios from 'axios'
 import Table from './logs/Tables'
 import Box from '@material-ui/core/Box'
-import { makeStyles, Button} from '@material-ui/core'
+import { makeStyles} from '@material-ui/core'
 import PropTypes from 'prop-types'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import DialogPop from '../dialog/Dialog'
-import DeleteIcon from '@material-ui/icons/Delete'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
- function Admin() {
+ export default function Admin() {
   const classes = useStyles()
   const history  = useHistory()
   const [value, setValue] = React.useState(0)
@@ -115,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
               }
             })
             .then((res)=>{
+         
               history.push('/logout')
             })
             .catch(err=>console.log(err))
@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
           .then((res)=>{
             setCounter(3)
             let obj =  res.data
-            obj.map((arr)=>{
+            obj.forEach((arr)=>{
               delete arr.user_id
               delete arr.website_id
             })
@@ -149,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
           .then((res)=>{
             setCounter(4)
             let obj = res.data
-            obj.map((arr)=> { 
+            obj.forEach((arr)=> { 
               delete arr.user_id 
               delete arr.log_id})
             setLogs(obj)
@@ -166,6 +166,7 @@ const useStyles = makeStyles((theme) => ({
             }
           })
           .then((res)=>{
+   
             setCounter(5)
           })
           .catch(err=>console.log(err))
@@ -178,6 +179,7 @@ const useStyles = makeStyles((theme) => ({
           }
         })
         .then((res)=>{
+       
           setCounter(6)
         })
         .catch(err=>console.log(err))
@@ -197,7 +199,10 @@ const useStyles = makeStyles((theme) => ({
       //     })
       //     .catch(err=>console.log(err))
       // }
- 
+    const resetCounter = () =>{
+      setCounter(0)
+    }
+
     return (
   <div>
     <Navbar/>
@@ -214,29 +219,42 @@ const useStyles = makeStyles((theme) => ({
         <Tab label="Me" {...a11yProps(1)} onClick={getUserByIdHandler}/>
         <Tab label="Websites" {...a11yProps(2)} onClick={getWebsiteHandler} />
         <Tab label="Logs" {...a11yProps(3)} onClick={getLogs}/>
-        <Button   
-                  startIcon={<DeleteIcon />} 
+        <Tab {...a11yProps(4)} 
+                   label="Clear Logs"
                   onClick={()=> setCounter(5)}
-                  className={classes.buton,classes.space}>
-                  Logs</Button>
-        <Button  
+                  className={classes.buton, classes.space}/>
+        <Tab {...a11yProps(5)} 
+                   label="Delete Website"
+                  onClick={()=> setCounter(5)}
+                  className={classes.buton}/>
+        <Tab  {...a11yProps(6)} 
+                  label="Delete Account"
+                  onClick={()=> {setCounter(7)}}
+                  className={classes.buton}/>
+                    
+        {/* <Button  
                   startIcon={<DeleteIcon />} 
-                  onClick={()=> {setCounter(6)}}>
+                  onClick={()=> {setCounter(6)}}
+                  className={classes.buton}>
                   Websites</Button>
         <Button  
                   startIcon={<DeleteIcon />} 
-                  onClick={()=> {setCounter(7)}}>
-                  Account</Button>          
+                  onClick={()=> {setCounter(7)}}
+                  className={classes.buton}>
+                  Account</Button>           */}
         </Tabs>
-
+     
        
       { counter === 1 ?   <Table data={user} value={value} index={0}/>
       : counter === 2 ?   <Table data={currentUser} value={value} index={1}/>
       : counter === 3 ?   <Table data={website} value={value} index={2}/>
       : counter === 4 ?   <Table data={logs} value={value} index={3}/>
-      : counter === 5 ?   <DialogPop text={'Are you sure to clear Logs'} button={'Delete'} function={clearLogsHandler}/>
-      : counter === 6 ?   <DialogPop text={'Are you sure to delete websites'} button ={'Delete'} function={clearWebsiteHandler}/>
-      : counter === 7 ?   <DialogPop text={'This will delete your Account'} button ={'Agree'} function={deleteUserByIdHandler}/>
+      : counter === 5 ?   <DialogPop text={'Are you sure to clear Logs'} resetCounter={resetCounter}
+                          button={'Delete'} function={clearLogsHandler}/>
+      : counter === 6 ?   <DialogPop text={'Are you sure to delete websites'} resetCounter={resetCounter}
+                          button ={'Delete'} function={clearWebsiteHandler}/>
+      : counter === 7 ?   <DialogPop text={'This will delete your Account'} resetCounter={resetCounter}
+                          button ={'Agree'} function={deleteUserByIdHandler}/>
       : null}
       
   </div>
@@ -244,4 +262,4 @@ const useStyles = makeStyles((theme) => ({
     )
  }
 //  <Table data={users} userFields={userFields}/>
-export default withRouter(Admin)
+// export default withRouter(Admin)

@@ -59,7 +59,6 @@ export default function Index(props) {
               <Tabs
                   value={value}
                   indicatorColor="secondary"
-                  textColor="secondary"
                   onChange={handleChange}
                   aria-label="disabled tabs example"
                   centered

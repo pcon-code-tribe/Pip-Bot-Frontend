@@ -19,6 +19,7 @@ export default function Logout(props) {
       }
  
     return (
-       <DialogPop button={'sign in'} text={'You Have Been Succesfully Logged Out'} function={()=> history.push('/')}/>
+       <DialogPop button={'sign in'} text={'You Have Been Succesfully Logged Out'}
+        function={()=> history.push('/')} resetCounter={()=> {return} }/>
     )
 }

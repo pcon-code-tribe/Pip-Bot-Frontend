@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       overflowX: 'hide',
     },
     table: {
