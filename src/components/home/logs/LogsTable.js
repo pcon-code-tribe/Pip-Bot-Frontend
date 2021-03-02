@@ -16,7 +16,7 @@ const useStyles = makeStyles({
       marginTop:20,
     },
     head:{
-        backgroundColor:'#8e44ad',
+        backgroundColor:'#30336b',
     }
   });
 
@@ -39,13 +39,13 @@ export default function LogsTable(props){
           <TableBody>
            {props.chartData.map((data,index) => (
               <TableRow key={index}  >
-                <TableCell component="th" scope="row" align="center" style={{color:'#8e44ad'}}>
+                <TableCell component="th" scope="row" align="center" style={{color:'#30336b'}}>
                   {index+1}
                 </TableCell>
-                <TableCell align="center" style={{color:'#8e44ad'}}>{data.link}</TableCell>
-                <TableCell align="center" style={{color:'#8e44ad'}}>{data.time}</TableCell>
-                <TableCell align="center" style={{color:'#8e44ad'}}>{data.code}</TableCell>
-                <TableCell align="center" style={{color:'#8e44ad'}}>{data.interval}</TableCell>
+                <TableCell align="center" style={{color:'#30336b'}}>{data.link}</TableCell>
+                <TableCell align="center" style={{color:'#30336b'}}>{data.time}</TableCell>
+                <TableCell align="center" style={{color:'#30336b'}}>{data.code}</TableCell>
+                <TableCell align="center" style={{color:'#30336b'}}>{data.interval}</TableCell>
               </TableRow>
             ))} 
         </TableBody>

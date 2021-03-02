@@ -1,13 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {Grid , TextField, makeStyles, Button} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
-import {useHistory, Redirect} from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import axios from 'axios';
 //importing validation.js
 import {UserSchemaRegistration} from './Validation';
 import {Formik, Field, Form, ErrorMessage } from 'formik';
+import Pops from '../dialog/Pops'
 
 //adding custom styles with material-ui
 const useStyles = makeStyles(theme => ({
@@ -20,14 +20,10 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-// const showDialog = (show) =>{
-//    console.log(show)
-   
-// }
-
 //react functional component Register
 export default function Register(props) {
-
+      
+    const [showPops, setShowPops] = useState(0)
     //material ui instanace
     const classes = useStyles();
     
@@ -41,10 +37,17 @@ export default function Register(props) {
           isActive : 1}
           )  // object of registeremail, regsiterpassword ,plan, isActive
         .then((response)=>{
-            alert(response.data.message)
+            setShowPops(1) //when user has been added sucesfully
         })
-        .catch(err => console.log(err))
-        
+        .catch(err => {
+           if( err.response.data.message != null)
+             setShowPops(2) //when username already exist
+        })
+    }
+
+    //reset showPops to 0
+    const resetShowPops = ()=>{ 
+        setShowPops(0) 
     }
    
     return (
@@ -52,7 +55,11 @@ export default function Register(props) {
             
            <Paper className={classes.paper}>
                {/* icon */}
-              
+              {
+                   showPops === 1 ? <Pops text={'User added successfully'} type={'success'} resetShowPops={resetShowPops} />
+                 : showPops === 2 ? <Pops text={'Email already exist'} type={'warning'} resetShowPops={resetShowPops}/>
+                 : null 
+              }
               <Grid align="center" style={{padding:'30px 0px 0px 0px'}}>
                  <Avatar className={classes.color} ><PersonAddIcon/></Avatar>
                  <h3>Register Yourself</h3>
