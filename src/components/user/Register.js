@@ -38,6 +38,7 @@ export default function Register(props) {
           )  // object of registeremail, regsiterpassword ,plan, isActive
         .then((response)=>{
             setShowPops(1) //when user has been added sucesfully
+            window.location.reload()
         })
         .catch(err => {
            if( err.response.data.message != null)
